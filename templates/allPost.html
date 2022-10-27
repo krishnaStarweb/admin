@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tables - Admin One Tailwind CSS Admin Dashboard</title>
+
+  <!-- Tailwind is included -->
+  <link rel="stylesheet" href="/static/css/main.css">
+  <link rel="stylesheet" href="/static/js/main.min.js">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"/>
+  <link rel="mask-icon" href="safari-pinned-tab.svg" color="#00b4b6"/>
+
+  <meta name="description" content="Admin One - free Tailwind dashboard">
+
+  <meta property="og:url" content="https://justboil.github.io/admin-one-tailwind/">
+  <meta property="og:site_name" content="JustBoil.me">
+  <meta property="og:title" content="Admin One HTML">
+  <meta property="og:description" content="Admin One - free Tailwind dashboard">
+  <meta property="og:image" content="https://justboil.me/images/one-tailwind/repository-preview-hi-res.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="960">
+
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="Admin One HTML">
+  <meta property="twitter:description" content="Admin One - free Tailwind dashboard">
+  <meta property="twitter:image:src" content="https://justboil.me/images/one-tailwind/repository-preview-hi-res.png">
+  <meta property="twitter:image:width" content="1920">
+  <meta property="twitter:image:height" content="960">
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130795909-1"></script> -->
+  <!-- <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-130795909-1');
+  </script> -->
+
+</head>
+<body>
+
+<div id="app">
+
+<nav id="navbar-main" class="navbar is-fixed-top">
+  <div class="navbar-brand">
+    <a class="navbar-item mobile-aside-button">
+      <span class="icon"><i class="mdi mdi-forwardburger mdi-24px"></i></span>
+    </a>
+  </div>
+  <div class="navbar-brand is-right">
+    <a class="navbar-item --jb-navbar-menu-toggle" data-target="navbar-menu">
+      <span class="icon"><i class="mdi mdi-dots-vertical mdi-24px"></i></span>
+    </a>
+  </div>
+  <div class="navbar-menu" id="navbar-menu">
+    <div class="navbar-end"></div>
+      <div class="navbar-item dropdown has-divider has-user-avatar">
+        <a class="navbar-link">
+          <div class="label"><span>Super Admin</span></div>
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item">
+            <span class="icon"><i class="mdi mdi-logout"></i></span>
+            <span>Log Out</span>
+          </a>
+        </div>
+      </div>
+      <a title="Log out" class="navbar-item desktop-icon-only">
+        <span class="icon"><i class="mdi mdi-logout"></i></span>
+        <span>Log out</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<aside class="aside is-placed-left is-expanded">
+  <div class="aside-tools">
+    <div>
+      Admin <b class="font-black">One</b>
+    </div>
+  </div>
+  <div class="menu is-menu-main">
+    <p class="menu-label">General</p>
+    <ul class="menu-list">
+      <li class="--set-active-index-html">
+        <a href="/index">
+          <span class="icon"><i class="mdi mdi-desktop-mac"></i></span>
+          <span class="menu-item-label">Dashboard</span>
+        </a>
+      </li>
+    </ul>
+    <ul class="menu-list">
+      <li class="--set-active-forms-html">
+        <a href="/allCategory">
+          <span class="icon"><i class="mdi mdi-table"></i></span>
+          <span class="menu-item-label">All category</span>
+        </a>
+      </li>
+      <li class="--set-active-forms-html">
+        <a href="/category">
+          <span class="icon"><i class="mdi mdi-square-edit-outline"></i></span>
+          <span class="menu-item-label">category</span>
+        </a>
+      </li>
+      <li class="active">
+        <a href="/allPost">
+          <span class="icon"><i class="mdi mdi-table"></i></span>
+          <span class="menu-item-label">All Post</span>
+        </a>
+      </li>
+      <li class="--set-active-forms-html">
+        <a href="/post">
+          <span class="icon"><i class="mdi mdi-file-document"></i></span>
+          <span class="menu-item-label">Post</span>
+        </a>
+      </li>
+      <li class="--set-active-profile-html">
+        <a href="/profile">
+          <span class="icon"><i class="mdi mdi-account-circle"></i></span>
+          <span class="menu-item-label">Profile</span>
+        </a>
+      </li>
+      <li>
+        <a href="/login">
+          <span class="icon"><i class="mdi mdi-lock"></i></span>
+          <span class="menu-item-label">Logout</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</aside>
+
+<section class="is-hero-bar">
+  <div class="flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
+    <h1 class="title">All Posts</h1>
+  </div>
+</section>
+
+  <section class="section main-section">
+    <div class="card has-table">
+      <header class="card-header">
+        <p class="card-header-title">
+          <span class="icon"><i class="mdi mdi-format-list-bulleted"></i></span>
+          Post
+        </p>
+      </header>
+      <div class="card-content">
+        <table>
+          <thead>
+            <th>Post</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for post in all_post %}
+          <tr>
+            <td class="checkbox-cell">
+              <label class="checkbox">
+                <input type="checkbox">
+                <span class="check"></span>
+              </label>
+            </td>
+            <td data-label="Company">
+              <div>{{ post[0] }}</div>
+            </td>
+            <td class="actions-cell">
+              <div class="buttons right nowrap">
+                <a href="/post/edit/{{ post[1] }}"> 
+                  <button class="button small green --jb-modal" data-target="sample-modal-2" type="button">
+                  <span class="icon"><i class="mdi mdi-file-edit"></i></span>
+                  </button>
+                </a>
+                <a href="/post/delete/{{ post[1] }}"> 
+                  <button class="button small red --jb-modal" data-target="sample-modal" type="button">
+                  <span class="icon"><i class="mdi mdi-trash-can"></i></span>
+                  </button>
+                </a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        <div class="table-pagination">
+          <div class="flex items-center justify-between">
+            <div class="buttons">
+              <button type="button" class="button active">1</button>
+              <button type="button" class="button">2</button>
+              <button type="button" class="button">3</button>
+            </div>
+            <small>Page 1 of 3</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Scripts below are for demo only -->
+<!-- <script type="text/javascript" src="js/main.min.js?v=1628755089081"></script> -->
+
+
+<script>
+
+const elToggle  = document.querySelector("#toggle1");
+const elContent = document.querySelector("#content1");
+
+  elToggle.addEventListener("click", function() {
+  elContent.classList.toggle("is-hidden1");
+});
+
+const elToggle2  = document.querySelector("#toggle2");
+const elContent2 = document.querySelector("#content2");
+
+  elToggle2.addEventListener("click", function() {
+  elContent2.classList.toggle("is-hidden2");
+});
+
+const elToggle3  = document.querySelector("#toggle3");
+const elContent3 = document.querySelector("#content3");
+
+  elToggle3.addEventListener("click", function() {
+  elContent3.classList.toggle("is-hidden3");
+});
+
+const elToggle4  = document.querySelector("#toggle4");
+const elContent4 = document.querySelector("#content4");
+
+  elToggle4.addEventListener("click", function() {
+  elContent4.classList.toggle("is-hidden4");
+});
+
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '658339141622648');
+  fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=658339141622648&ev=PageView&noscript=1"/></noscript>
+
+<!-- Icons below are for demo only. Feel free to use any icon pack. Docs: https://bulma.io/documentation/elements/icon/ -->
+<link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css">
+
+</body>
+</html>
