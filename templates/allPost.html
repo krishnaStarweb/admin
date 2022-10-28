@@ -105,7 +105,7 @@
       <li class="--set-active-forms-html">
         <a href="/category">
           <span class="icon"><i class="mdi mdi-square-edit-outline"></i></span>
-          <span class="menu-item-label">category</span>
+          <span class="menu-item-label">Category</span>
         </a>
       </li>
       <li class="active">
@@ -142,63 +142,56 @@
   </div>
 </section>
 
+<form action="/deletemorepost" method="POST">
   <section class="section main-section">
-    <div class="card has-table">
-      <header class="card-header">
-        <p class="card-header-title">
-          <span class="icon"><i class="mdi mdi-format-list-bulleted"></i></span>
-          Post
-        </p>
-      </header>
+      <button class="button small red --jb-modal moreDel" formaction="/deletemorepost">Delete All </button>
+      <div class="card has-table">
       <div class="card-content">
         <table>
-          <thead>
-            <th>Post</th>
-          </tr>
-          </thead>
           <tbody>
-          {% for post in all_post %}
-          <tr>
-            <td class="checkbox-cell">
-              <label class="checkbox">
-                <input type="checkbox">
-                <span class="check"></span>
-              </label>
-            </td>
-            <td data-label="Company">
-              <div>{{ post[0] }}</div>
-            </td>
-            <td class="actions-cell">
-              <div class="buttons right nowrap">
-                <a href="/post/edit/{{ post[1] }}"> 
+            {% for post in all_post %}
+            <tr>
+              <td class="checkbox-cell">
+                <label > 
+                  <input type="checkbox" name="clinic_info1" value="{{ post[1] }}">
+                  <span class="check" name="clinic_info1" value="{{ post[1] }}"></span>
+                </label>
+              </td>
+              <td data-label="Company">
+                <div>{{ post[0] }}</div>
+              </td>
+              <td class="actions-cell">
+                <div class="buttons right nowrap">
+                  <a href="/post/edit/{{ post[1] }}"> 
                   <button class="button small green --jb-modal" data-target="sample-modal-2" type="button">
-                  <span class="icon"><i class="mdi mdi-file-edit"></i></span>
+                    <span class="icon"><i class="mdi mdi-file-edit"></i></span>
                   </button>
                 </a>
                 <a href="/post/delete/{{ post[1] }}"> 
                   <button class="button small red --jb-modal" data-target="sample-modal" type="button">
-                  <span class="icon"><i class="mdi mdi-trash-can"></i></span>
+                    <span class="icon"><i class="mdi mdi-trash-can"></i></span>
                   </button>
                 </a>
               </div>
             </td>
           </tr>
           {% endfor %}
-          </tbody>
-        </table>
-        <div class="table-pagination">
-          <div class="flex items-center justify-between">
-            <div class="buttons">
-              <button type="button" class="button active">1</button>
-              <button type="button" class="button">2</button>
-              <button type="button" class="button">3</button>
-            </div>
-            <small>Page 1 of 3</small>
+        </tbody>
+      </table>
+      <div class="table-pagination">
+        <div class="flex items-center justify-between">
+          <div class="buttons">
+            <button type="button" class="button active">1</button>
+            <button type="button" class="button">2</button>
+            <button type="button" class="button">3</button>
           </div>
+          <small>Page 1 of 3</small>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+</form>
 </div>
 
 <!-- Scripts below are for demo only -->

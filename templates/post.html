@@ -97,7 +97,7 @@
       <li >
         <a href="/category">
           <span class="icon"><i class="mdi mdi-square-edit-outline"></i></span>
-          <span class="menu-item-label">category</span>
+          <span class="menu-item-label">Category</span>
         </a>
       </li>
       <li class="--set-active-forms-html">
@@ -138,13 +138,13 @@
       <div class="card mb-6">
         <!-- <h1 class="label" >Post Title</h1> -->
           <label for="post_name" class="label"><h1>Post Title</h1></label>
-          <input type="text" class="form-control" name="post_name" id="post_name" placeholder="Enter Post title">
+          <input type="text" class="form-control" name="post_name" id="post_name" placeholder="Enter Post title" pattern="[A-Za-z]{1,15}" maxlength="15">
           <!-- </form><br> -->
           <!-- <form> -->
             <br>
             <div class="form-group">
               <label for="post_image" class="label"><h1>Post Image</h1></label>
-              <input type="file" class="form-control" name="post_image" id="post_image">
+              <input type="file" class="form-control" name="post_image" id="post_image" accept="image/png, image/jpeg">
             </div>
             <!-- </form><br> -->
             <br>
@@ -163,20 +163,18 @@
           </div>
       </div>
     </section>
-  </form>
-</section>
-
-  <section class="section main-section category" id="subcat">
-    <h1 class="label">All Categorys</h1>
-    {% for cat in all_name %}
-    <label data-label="Company">
-      <!-- <a href="/category/{{ cat[1] }}"> -->
-        <input type="radio" name="get_value" id="get_value" value="{{ cat[1] }}">
-        <label >{{ cat[0] }}</label>
-      <!-- </a> -->
-    </label>
-    <br>
-    {% endfor %}
+    
+    <section class="section main-section category" id="subcat">
+      <h1 class="label">All Categorys</h1>
+      {% for cat in all_name %}
+      <label data-label="Company">
+        <input type="checkbox" name="get_value1" id="get_value1" value="{{ cat[1] }}" >
+        <label>{{ cat[0] }}</label>
+      </label>
+      <br>
+      {% endfor %}
+    </section>
+    </form>
   </section>
   
 </div>

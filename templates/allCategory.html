@@ -105,7 +105,7 @@
       <li >
         <a href="/category">
           <span class="icon"><i class="mdi mdi-square-edit-outline"></i></span>
-          <span class="menu-item-label">category</span>
+          <span class="menu-item-label">Category</span>
         </a>
       </li>
       <li >
@@ -143,27 +143,18 @@
 </section>
 <form action="/cat" method="POST">
   <section class="section main-section">
+    <button class="button small red --jb-modal moreDel" formaction="/moredelete">Delete All </button>
     <div class="card has-table">
-      <header class="card-header">
-        <p class="card-header-title">
-          <span class="icon"><i class="mdi mdi-format-list-bulleted"></i></span>
-          Category
-        </p>
-      </header>
       <div class="card-content">
         <table>
-          <thead>
-            <th>Category</th>
-          </tr>
-        </thead>
         <tbody>
           {% for name in all_category %}
           <tr>
             <td class="checkbox-cell">
-              <label class="checkbox">
-                <input type="checkbox" name="clinic_info" >
-                <span class="check" name="clinic_info"></span>
-              </label>
+                <label class="checkbox">
+                  <input type="checkbox" name="clinic_info" value="{{ name[0] }}">
+                  <span class="check" name="clinic_info" value="{{ name[0] }}"></span>
+                </label>
             </td>
             <td data-label="Company">
               <div id="toggle1" onclick="checks()">{{ name[1] }}</div>
@@ -171,12 +162,12 @@
             </td>
             <td class="actions-cell">
               <div class="buttons right nowrap">
-                <a href="/category/edit/{{ name[1] }}"> 
+                <a href="/category/edit/{{ name[0] }}"> 
                   <button class="button small green --jb-modal" data-target="sample-modal-2" type="button">
                     <span class="icon"><i class="mdi mdi-file-edit"></i></span>
                   </button>
                 </a>
-                <a href="/category/delete/{{ name[1] }}"> 
+                <a href="/category/delete/{{ name[0] }}"> 
                   <button class="button small red --jb-modal" data-target="sample-modal" type="button">
                     <span class="icon"><i class="mdi mdi-trash-can"></i></span>
                   </button>

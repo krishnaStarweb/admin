@@ -1,3 +1,5 @@
+from crypt import methods
+from operator import ne
 from turtle import pos
 from flask import Flask, render_template, request,  redirect, session, jsonify
 import mysql.connector
@@ -71,36 +73,58 @@ def tables():
     return render_template('allCategory.html', all_category = name )
 
 # For edit category
-@app.route('/category/edit/<int:name>', methods=['GET','POST'])
+@app.route('/category/edit/<name>', methods=['GET','POST', 'PATCH'])
 def edit(name):
     #Select data from category table using category id
-    Data = mycursor.execute('SELECT * FROM category where id = %s ', [name])
-    mycursor.execute(Data)
+    mycursor.execute("SELECT * FROM category where id = '" +name +"'")
     user = mycursor.fetchone()
-
     #Update data into table
-    if (request.method == "POST"):
+    if request.method == "POST":
         category_name = request.form.get('category_name')
         category_image = request.form.get('image')
         sub_category_name = request.form.get('sub_category')
         sub_category_image = request.form.get('sub_category_image')
         parent = request.form.get('get_value')
-
-        mycursor.execute('UPDATE category SET(category_name, category_image, sub_category_name, sub_category_image) values(%s, %s, %s, %s, %s) ' , (category_name, category_image, sub_category_name, sub_category_image,parent))
-        mydb.commit()
         
-        return render_template('allCategory.html', user = user, all_name = all_name )
-    return render_template('edit.html' , user=user, all_name = all_name)
+        query = '''UPDATE category
+                SET category_name = %s, category_image = %s, sub_category_name = %s, sub_category_image = %s ,parent = %s   
+                WHERE id = %s ''' 
+        values =  (category_name, category_image, sub_category_name, sub_category_image, parent, name)
+        mycursor.execute(query, values)
+        mydb.commit()
+    
+        return redirect('/allCategory')
+    return render_template('edit.html' , user = user, all_name = all_name, name = name)
+
+#Delete one or more category
+@app.route('/moredelete', methods= ['POST', 'GET'])
+def moredelete():
+    if request.method == 'POST':
+        for gt in request.form.getlist('clinic_info'):
+            print(gt)
+            mycursor.execute("DELETE FROM category WHERE id = {0}" .format(gt))
+            mydb.commit()
+    return redirect('/allCategory')
+
+#Delete one or more post
+@app.route("/deletemorepost", methods=['POST', 'GET'])
+def deletemorepost():
+    if request.method == 'POST':
+        for gt1 in request.form.getlist('clinic_info1'):
+            print(gt1)
+            mycursor.execute("DELETE FROM post WHERE id = {0}" .format(gt1))
+            mydb.commit()
+    return redirect('/allPost')
 
 #For delete category
-@app.route('/category/delete/<string:name>', methods=['GET','POST'])
+@app.route('/category/delete/<name>', methods=['GET','POST'])
 def delete(name):
     #Delete data from category table using category id
     mycursor.execute('DELETE FROM category WHERE id = %s',[name])
-    delete =  mycursor.fetchone()
+    delete =  mycursor.fetchall()
     mydb.commit()
 
-    return render_template('allCategory.html', delete = delete , all_name = all_name)
+    return redirect('/allCategory')
 
 
 #All post template
@@ -114,34 +138,37 @@ def allPost():
     return render_template('allPost.html' , all_post = all_post)
 
 #For delete post
-@app.route('/post/delete/<string:post>', methods=['GET','POST'])
+@app.route('/post/delete/<post>', methods=['GET','POST'])
 def deletePost(post):
     #Delete row form post table using post id
-    mycursor.execute('DELETE FROM post WHERE id = %s', post)
+    mycursor.execute('DELETE FROM post WHERE id = %s', [post])
     deletePost =  mycursor.fetchall()
     mydb.commit()
 
-    return render_template('allPost.html', deletePost = deletePost)
+    return redirect('/allPost')
 
 #For edit post
-@app.route('/post/edit/<string:post>', methods=['GET','POST'])
+@app.route('/post/edit/<post>', methods=['GET','POST'])
 def editPost(post):
-    #Select values from post table using post id
-    editPost = mycursor.execute('SELECT * FROM post WHERE id = %s',[post])
-    mycursor.execute(editPost)
+    mycursor.execute("SELECT * FROM post where id = '" +post +"'")
     edit_post =  mycursor.fetchone()
-
+    print(edit_post)
     #Update data
     if (request.method == 'POST'):
         post = request.form.get('post_name')
         post_image = request.form.get('post_image')
         description = request.form.get('description')
-        parent = request.form.get('get_Value')
+        parent = request.form.get('clinic_info1')
+        print(post)
 
-        mycursor.execute('insert into post (post, post_image, description, parent) values(%s, %s, %s, %s)', (post, post_image, description, parent))
+        querys = '''UPDATE post
+                SET post = %s, post_image = %s, description = %s, category_parent = %s
+                WHERE id = %s '''
+        valuess = (post, post_image, description, parent, post)
+        mycursor.execute(querys, valuess)
         mydb.commit()
 
-        return render_template('editPost.html', edit_post = edit_post ,all_name = all_name)
+        return redirect('/allPost')
     return render_template('editPost.html', edit_post = edit_post, all_name = all_name)
 
 
@@ -161,7 +188,7 @@ def category():
         sub_category_image = request.form.get('sub_category_image')
         parent = request.form.get('get_value')
 
-        mycursor.execute('insert into category (category_name, category_image, sub_category_name,  sub_category_image,category_parent) values(%s, %s, %s, %s, %s)', (category_name, category_image, sub_category_name, sub_category_image, parent))
+        mycursor.execute('insert into category (category_name, category_image, sub_category_name,  sub_category_image, parent) values(%s, %s, %s, %s, %s)', (category_name, category_image, sub_category_name, sub_category_image, parent))
         mydb.commit()
         # mycursor.close()
         
@@ -192,9 +219,9 @@ def post():
         post = request.form.get('post_name')
         post_image = request.form.get('post_image')
         description = request.form.get('description')
-        parent = request.form.get('get_value')
+        parent = request.form.get('get_value1')
 
-        mycursor.execute('insert into post (post, post_image, description,category_parent) values(%s, %s, %s,%s)', (post, post_image, description, parent))
+        mycursor.execute('insert into post (post, post_image, description, category_parent) values(%s, %s, %s,%s)', (post, post_image, description, parent))
         mydb.commit()
         
         return render_template('post.html', all_name = all_name)
