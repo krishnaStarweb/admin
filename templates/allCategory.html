@@ -157,8 +157,42 @@
                 </label>
             </td>
             <td data-label="Company">
-              <div id="toggle1" onclick="checks()">{{ name[1] }}</div>
-              <div id="content1" class="is-hidden1">{{ name[3] }}</div>
+              <div id="content1" onclick="checks()">{{ name[1] }}</div>
+              <div id="toggle1" class="is-hidden1"> 
+                <div class="card has-table">
+                <div class="card-content">
+                  <table>
+                  <tbody>
+                    <tr>
+                      <td class="checkbox-cell">
+                        <label > 
+                          <input type="checkbox" name="clinic_info1" value="{{ name[0] }}">
+                          <span class="check" name="clinic_info1" value="{{ name[0] }}"></span>
+                        </label>
+                      </td>
+                      <td data-label="Company">
+                        <div>{{ name[3] }}</div>
+                      </td>
+                        <td class="actions-cell">
+                          <div class="buttons right nowrap">
+                            <a href="/category/edit/{{ name[0] }}"> 
+                              <button class="button small green --jb-modal" data-target="sample-modal-2" type="button">
+                              <span class="icon"><i class="mdi mdi-file-edit"></i></span>
+                              </button>
+                            </a>
+                            <a href="/category/delete/{{ name[0] }}"> 
+                              <button class="button small red --jb-modal" data-target="sample-modal" type="button">
+                              <span class="icon"><i class="mdi mdi-trash-can"></i></span>
+                              </button>
+                            </a>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                  </table>
+                </div>
+                </div>
+              </div>
             </td>
             <td class="actions-cell">
               <div class="buttons right nowrap">
@@ -177,7 +211,8 @@
           </tr>
           {% endfor %}
         </tbody>
-      </table>
+        </table>
+      </div>
       <div class="table-pagination">
         <div class="flex items-center justify-between">
           <div class="buttons">
@@ -189,7 +224,6 @@
         </div>
       </div>
     </div>
-  </div>
 </section>
 </form>
 </div>
@@ -200,15 +234,15 @@
 
 <script>
 
-  // const targetDiv = document.getElementById("toggle1");
-  // const btn = document.getElementById("content1");
-  // function checks() {
-  //   if (targetDiv.style.display == "none") {
-  //       targetDiv.style.display = "block";
-  //     } else {
-  //       targetDiv.style.display = "none";
-  //     }
-  //   };
+  const targetDiv = document.getElementById("toggle1");
+  const btn = document.getElementById("content1");
+  function checks() {
+    if (targetDiv.style.display === "none") {
+        targetDiv.style.display = "block";
+      } else {
+        targetDiv.style.display = "none";
+      }
+    };
 </script>
 
 <script>

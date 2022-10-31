@@ -111,7 +111,6 @@ def moredelete():
 def deletemorepost():
     if request.method == 'POST':
         for gt1 in request.form.getlist('clinic_info1'):
-            print(gt1)
             mycursor.execute("DELETE FROM post WHERE id = {0}" .format(gt1))
             mydb.commit()
     return redirect('/allPost')
@@ -152,7 +151,6 @@ def deletePost(post):
 def editPost(post):
     mycursor.execute("SELECT * FROM post where id = '" +post +"'")
     edit_post =  mycursor.fetchone()
-    print(edit_post)
     #Update data
     if (request.method == 'POST'):
         post = request.form.get('post_name')
@@ -173,7 +171,7 @@ def editPost(post):
 
 
 #For getting all category names
-all_name = mycursor.execute('SELECT category_name, id FROM category')
+all_name = mycursor.execute('SELECT category_name, id, sub_category_name FROM category')
 mycursor.execute(all_name)
 all_name = mycursor.fetchall()
 
@@ -211,6 +209,11 @@ def insert():
     return render_template('category.html', all_name = all_name , id=id)
 
 
+#For getting all sub category names
+all_subname = mycursor.execute('SELECT * FROM category')
+mycursor.execute(all_subname)
+all_subname = mycursor.fetchall()
+
 #Post template
 @app.route('/post', methods=['GET', 'POST'])
 def post():
@@ -219,12 +222,19 @@ def post():
         post = request.form.get('post_name')
         post_image = request.form.get('post_image')
         description = request.form.get('description')
-        parent = request.form.get('get_value1')
-
-        mycursor.execute('insert into post (post, post_image, description, category_parent) values(%s, %s, %s,%s)', (post, post_image, description, parent))
+        parent = request.form.getlist('get_value1')
+        
+        t = []
+        for i in parent:
+            a = i
+            t.append(a)
+        
+        ta = str(t)
+        print(t)
+        mycursor.execute('insert into post (post, post_image, description, category_parent) values(%s, %s, %s,%s)', (post, post_image, description, ta))
         mydb.commit()
         
-        return render_template('post.html', all_name = all_name)
+        return render_template('post.html', all_name = all_name, all_subname = all_subname)
     return render_template('post.html', all_name = all_name)
 
 #Profile template
