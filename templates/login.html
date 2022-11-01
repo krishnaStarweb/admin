@@ -56,14 +56,14 @@
         </p>
       </header>
       <div class="card-content">
-        <form action="/" method="POST">
+        <form action="/" method="POST" onclick="preventBack()">
           <div class="field spaced">
-            <label class="label">Login</label>
+            <label class="label">User ID</label>
             <div class="control icons-left">
               <input class="input" type="email" name="email" placeholder="user@example.com" autocomplete="email"  id="email" required>
               <span class="icon is-small left"><i class="mdi mdi-account"></i></span>
             </div>
-            <p class="help">Please enter your login</p>
+            <p class="help">Please enter your email</p>
           </div>
           <div class="field spaced">
             <label class="label">Password</label>
@@ -81,6 +81,7 @@
               </label>
             </div>
           </div>
+          <div class="msg">{{ msg }}</div>
           <hr>
           <div class="field grouped">
             <div class="control">
@@ -95,6 +96,13 @@
 
 
 </div>
+
+<script type="text/javascript">
+  function preventBack() { window.history.forward(); }
+    setTimeout("preventBack()", 0);
+    window.onunload = function () { null };
+</script>
+
 
 <!-- <script>
 

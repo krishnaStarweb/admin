@@ -98,3 +98,7 @@ input#exampleInputEmail1{
 .moreDel{
     margin-left: 92%;
 }
+
+.msg {
+    color: red;
+}

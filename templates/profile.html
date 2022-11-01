@@ -127,7 +127,7 @@
         </a>
       </li>
       <li>
-        <a href="/login">
+        <a href="/login" onclick="noBack()">
           <span class="icon"><i class="mdi mdi-lock"></i></span>
           <span class="menu-item-label">Login</span>
         </a>
@@ -145,27 +145,27 @@
 </section>
 
   <section class="section main-section">
-    <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 mb-6">
+    <section class="section main-section category">
       <div class="card">
         <header class="card-header">
           <p class="card-header-title">
             <span class="icon"><i class="mdi mdi-account-circle"></i></span>
-            Edit Profile
+            Profile
           </p>
         </header>
         <div class="card-content">
           <form action="profile" method="POST">
             <div class="field">
-              <label class="label">Name</label>
+              <label class="label">Username</label>
               <div class="field-body">
                 <div class="field">
                   <div class="control">
                     <input type="text" autocomplete="on" name="username" value="Super Admin" class="input" required>
                   </div>
-                  <p class="help">Required. Your name</p>
                 </div>
               </div>
             </div>
+            <br>
             <div class="field">
               <label class="label">E-mail</label>
               <div class="field-body">
@@ -173,14 +173,14 @@
                   <div class="control">
                     <input type="email" autocomplete="on" name="email" value="user@example.com" class="input" required>
                   </div>
-                  <p class="help">Required. Your e-mail</p>
                 </div>
               </div>
             </div>
           </form>
         </div>
       </div>
-    </div>
+  </section>
+  <section class="section main-section category">
     <div class="card">
       <header class="card-header">
         <p class="card-header-title">
@@ -224,11 +224,23 @@
       </div>
     </div>
   </section>
+  </section>
 </div>
 
 <!-- Scripts below are for demo only -->
 <!-- <script type="text/javascript" src="js/main.min.js?v=1628755089081"></script> -->
 
+<!-- Logout and block previous page  -->
+<script type="text/javascript">
+  function noBack()
+   {
+       window.history.forward()
+   }
+  noBack();
+  window.onload = noBack;
+  window.onpageshow = function(evt) { if (evt.persisted) noBack() }
+  window.onunload = function() { void (0) }
+</script>
 
 <script>
   !function(f,b,e,v,n,t,s)

@@ -129,7 +129,7 @@
         </a>
       </li>
       <li>
-        <a href="/login">
+        <a href="/login" onclick="noBack()">
           <span class="icon"><i class="mdi mdi-lock"></i></span>
           <span class="menu-item-label">Logout</span>
         </a>
@@ -146,21 +146,17 @@
 <section class="section main-section">
   <form action="/category" method="POST" class="upload-file">
     <section class="section main-section category">
-      <!-- <div class="card mb-6"> -->
-        <h1 class="label">Category name</h1>
-          <div class="form-group">
-          <!-- <form  class="cateogry" style="padding: 5px"> -->
-            <!-- <label for="category_name" class="form-label"></label> -->
-            <input type="text" class="form-control" name="category_name" id="category_name" placeholder="Enter category name" pattern="[A-Za-z]{1,15}" maxlength="15">
-          </div>
-        <!-- </form><br> -->
-        <!-- <form> -->
-          <br>
-          <div class="form-group">
-            <label for="image" class="label"><h1>Category Image</h1></label>
-            <input type="file" class="form-control" name="image" id="image" data-max-size="2048" accept="image/png, image/jpeg, image/webp">
-          </div>
-        <!-- </form><br> -->
+      <h1 class="label">Category name</h1>
+        <div class="form-group">
+          <input type="text" class="form-control" name="category_name" id="category_name" placeholder="Enter category name" pattern="[A-Za-z]{1,15}" maxlength="15">
+        </div>
+        <p class="help">Please enter only Alphabets</p>
+        <br>
+        <div class="form-group">
+          <label for="image" class="label"><h1>Category image</h1></label>
+          <input type="file" class="form-control" name="image" id="image" accept="image/png, image/jpeg, image/webp" onchange="Filevalidation()" data-max-size="2048">
+        </div>
+        <p class="help">Select only png, jpeg and webp files and size lessthen 5 mb</p>
         <br>
         <div class="field grouped">
           <div class="control">
@@ -170,86 +166,62 @@
     </section>  
     <section class="section main-section category">
       <form action="/insert" , method="POST">
-        
-        <!-- <div class="card mb-6"> -->
           <h1 class="label">All Categorys</h1>
           {% for cat in all_name %}
           <label data-label="Company">
-            <!-- <a href="/category/{{ cat[1] }}"> -->
               <input type="radio" name="get_value" id="get_value"  value="{{ cat[1] }}" required>
               <label >{{ cat[0] }}</label>
-            <!-- </a> -->
           </label>
           <br>
-          <!-- <h4 id="result"></h4> -->
-          <!-- <form action=""> -->
-            <!-- <table>
-              <tbody>
-                <td class="checkbox-cell">
-                  <label class="checkbox">
-                <a href="/category/{{ cat[1] }}">
-                  <input type="radio" name="ss_{{loop.index}}" class="get_value" value="{{ cat[0] }}">{{ cat[0] }}
-                  <span class="check"></span>
-                </a>
-              </label>
-            </td>
-            <td data-label="Company" >
-                <div >{{ cat[0] }}</div>
-              </td>
-            </tbody>
-          </table> -->
-      {% endfor %}
-      <!-- <div class="form-check form-switch" onclick="insidesubcat()">
-        <input class="form-check-input" type="checkbox" id="category">
-        <label class="form-check-label" for="category">Category</label>
-      </div> -->
-      <!-- </form> <br> -->
-        <br>
-      <!-- <form  class="subcateogry"> -->
-        <div class="form-group">
-          <label for="sub_category" class="label"><h2>Add sub category</h2></label>
-          <input type="text" class="form-control " name="sub_category" id="sub_category" placeholder="Enter sub category" pattern="[A-Za-z]{1,15}" maxlength="15">
-        </div>
-        <!-- </form><br> -->
-        <br>
-        <!-- <form> -->
+          {% endfor %}
+          <br>
+          <div class="form-group">
+            <label for="sub_category" class="label"><h2>Add sub category</h2></label>
+            <input type="text" class="form-control " name="sub_category" id="sub_category" placeholder="Enter sub category" pattern="[A-Za-z]{1,15}" maxlength="15">
+          </div>
+          <p class="help">Please enter only Alphabets</p>
+          <br>
           <div class="form-group">
             <label for="sub_category_image" class="label"><h2>sub category image</h2></label>
-            <input type="file" class="form-control" name="sub_category_image" id="sub_category_image" accept="image/png, image/jpeg">
-          </div><br>
-          <!-- </form><br> -->
+            <input type="file" class="form-control" name="sub_category_image" id="sub_category_image" accept="image/png, image/jpeg, image/webp">
+          </div>
+          <p class="help">Select only png, jpeg and webp files and size lessthen 5 mb</p>
+          <br>
           <div class="field grouped">
-            <!-- <div class="control"> -->
               <button type="submit" name="submit" id="submit" class="button green">Submit</button>
-              <!-- </div> -->
             </div>
-          </form>
-          </section>
-    </form>
+        </form>
+      </section>
+  </form>
 </section>
 </div>
 
-
+<!-- Image validation function -->
 <script>
-  $(function(){
-      var fileInput = $('.upload-file');
-      var maxSize = fileInput.data('max-size');
-      $('.image').submit(function(e){
-          if(fileInput.get(0).files.length){
-              var fileSize = fileInput.get(0).files[0].size; // in bytes
-              if(fileSize>maxSize){
-                  alert('file size is more then' + maxSize + ' bytes');
-                  return false;
-              }else{
-                  alert('file size is correct- '+fileSize+' bytes');
+  Filevalidation = () => {
+      const fi = document.getElementById('image');
+      // Check if any file is selected.
+      if (fi.files.length > 0) {
+          for (const i = 0; i <= fi.files.length - 1; i++) {
+
+              const fsize = fi.files.item(i).size;
+              const file = Math.round((fsize / 1024));
+              // The size of the file.
+              if (file >= 4096) {
+                  alert(
+                    "File too Big, please select a file less than 5 mb");
+              } else if (file < 2048) {
+                  alert(
+                    "File too small, please select a file greater than 1 mb");
+              } else {
+                  document.getElementById('size').innerHTML = '<b>'
+                  + file + '</b> KB';
               }
-          }else{
-              alert('choose file, please');
-              return false;
           }
-      });
-  });
+      }
+  }
 </script>
+
 
 <script>
   $(document).ready(function() {
@@ -292,23 +264,35 @@
   fbq('track', 'PageView');
 </script> -->
 
-    <script>
-        const btn = document.querySelector('#btn');        
-        const radioButtons = document.querySelectorAll('input[name="size"]');
-        btn.addEventListener("click", () => {
-            let selectedSize;
-            for (const radioButton of radioButtons) {
-                if (radioButton.checked) {
-                    selectedSize = radioButton.value;
-                    break;
-                }
-            }
-            // show the output:
-            output.innerText = selectedSize ? `You selected ${selectedSize}` : `You haven't selected any size`;
-        });
-    </script>
-</body>
-</html>
+<!-- Logout and block previous page  -->
+<script type="text/javascript">
+  function noBack()
+   {
+       window.history.forward()
+   }
+  noBack();
+  window.onload = noBack;
+  window.onpageshow = function(evt) { if (evt.persisted) noBack() }
+  window.onunload = function() { void (0) }
+</script>
+
+<!-- image validation -->
+<script>
+  let input = document.getElementById('image')
+  let lable = document.getElementsByClassName('label')
+  input .addEventListener('change', () => {
+    let files = input.files;
+
+    if(files.length > 0){
+      if(file[0],size> 10 *1024 ){
+        lable.innerText = 'file size Exceeds';
+        return;
+      }
+    }
+    lable.innerText = " ";
+  })
+
+</script>
 
 <script>
   function showSub() {

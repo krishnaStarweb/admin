@@ -4,14 +4,11 @@ from turtle import pos
 from flask import Flask, render_template, request,  redirect, session, jsonify
 import mysql.connector
 import json
-
-# from sqlalchemy import all_
-# with open('config.json', 'r') as c:
-#     params = json.load(c)["params"]
-
-# local_server = True
+from flask_session import Session
 
 app = Flask(__name__)
+
+app.secret_key = 'login'
 
 mydb = mysql.connector.connect(
     host="localhost",
@@ -32,6 +29,8 @@ def login():
 
         #Check input username and password
         if (username == 'krishnapal.starwebindia@gmail.com' and password == '123456'):
+            session["username"] = username
+            session["password"] = password
             mycursor.execute('SELECT COUNT(id) FROM category')
             data = mycursor.fetchall()
             
@@ -41,14 +40,20 @@ def login():
             postCount = mycursor.fetchall()
             return render_template('index.html', output_data = data, post_count = postCount)
         else:
-            return render_template('login.html')
+            msg = 'Invalid email or password'
+            return render_template('login.html', msg = msg)
     else:
         return render_template('login.html')
 
 #Login page
 @app.route('/login')
 def logout():
-    return render_template('login.html')
+    if session['username']:
+        session.pop('username', None)
+        session.pop('password', None)
+        return redirect('/')
+    
+    return redirect('/')
 
 #Deshbord
 @app.route('/index', methods=['GET','POST'])
@@ -69,8 +74,8 @@ def index():
 def tables():
     mycursor.execute('SELECT * FROM category')
     name = mycursor.fetchall()
-
-    return render_template('allCategory.html', all_category = name )
+    
+    return render_template('allCategory.html', all_category = name , all_subname=all_subname)
 
 # For edit category
 @app.route('/category/edit/<name>', methods=['GET','POST', 'PATCH'])

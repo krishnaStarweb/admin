@@ -127,7 +127,7 @@
         </a>
       </li>
       <li>
-        <a href="/login">
+        <a href="/login" onclick="noBack()">
           <span class="icon"><i class="mdi mdi-lock"></i></span>
           <span class="menu-item-label">Logout</span>
         </a>
@@ -144,7 +144,7 @@
 
 <form action="/deletemorepost" method="POST">
   <section class="section main-section">
-      <button class="button small red --jb-modal moreDel" formaction="/deletemorepost">Delete All </button>
+    <button class="button small red --jb-modal moreDel" formaction="/deletemorepost" style="padding: 8px;">All Delete</button>
       <div class="card has-table">
       <div class="card-content">
         <table>
@@ -197,6 +197,17 @@
 <!-- Scripts below are for demo only -->
 <!-- <script type="text/javascript" src="js/main.min.js?v=1628755089081"></script> -->
 
+<!-- Logout and block previous page  -->
+<script type="text/javascript">
+  function noBack()
+   {
+       window.history.forward()
+   }
+  noBack();
+  window.onload = noBack;
+  window.onpageshow = function(evt) { if (evt.persisted) noBack() }
+  window.onunload = function() { void (0) }
+</script>
 
 <script>
 

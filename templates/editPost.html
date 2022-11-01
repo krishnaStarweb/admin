@@ -120,7 +120,7 @@
         </a>
       </li>
       <li>
-        <a href="/login">
+        <a href="/login" onclick="noBack()">
           <span class="icon"><i class="mdi mdi-lock"></i></span>
           <span class="menu-item-label">Logout</span>
         </a>
@@ -141,13 +141,15 @@
           <label for="post_name" class="label"><h1>Post Title</h1>
             <input type="text" class="form-control" name="post_name" id="post_name" placeholder="Enter Post title" value="{{ edit_post[1] }}">
         </label>
+        <p class="help">Please enter only Alphabets</p>
           <!-- </form><br> -->
           <!-- <form> -->
             <br>
             <div class="form-group">
               <label for="post_image" class="label"><h1>Post Image</h1></label>
-              <input type="file" class="form-control" name="post_image" id="post_image"  value="{{ edit_post[2] }}" accept="image/png, image/jpeg">
+              <input type="file" class="form-control" name="post_image" id="post_image"  value="{{ edit_post[2] }}" accept="image/png, image/jpeg, image/webp">
             </div>
+            <p class="help">Select only png, jpeg and webp files and size lessthen 5 mb</p>
             <!-- </form><br> -->
             <br>
             <div class="container mt-4 mb-4 keditor">
@@ -250,7 +252,45 @@
   }
   </script>
   <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<!-- Image validation function -->
+<script>
+  Filevalidation = () => {
+      const fi = document.getElementById('image');
+      // Check if any file is selected.
+      if (fi.files.length > 0) {
+          for (const i = 0; i <= fi.files.length - 1; i++) {
 
+              const fsize = fi.files.item(i).size;
+              const file = Math.round((fsize / 1024));
+              // The size of the file.
+              if (file >= 4096) {
+                  alert(
+                    "File too Big, please select a file less than 5 mb");
+              } else if (file < 2048) {
+                  alert(
+                    "File too small, please select a file greater than 1 mb");
+              } else {
+                  document.getElementById('size').innerHTML = '<b>'
+                  + file + '</b> KB';
+              }
+          }
+      }
+  }
+</script>
+
+  <!-- Logout and block previous page  -->
+  <script type="text/javascript">
+    function noBack()
+     {
+         window.history.forward()
+     }
+    noBack();
+    window.onload = noBack;
+    window.onpageshow = function(evt) { if (evt.persisted) noBack() }
+    window.onunload = function() { void (0) }
+  </script>
+
+  <!-- Text editor -->
   <script>
     tinymce.init({
     selector: 'textarea#editor',

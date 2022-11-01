@@ -64,12 +64,6 @@
         <a class="navbar-link">
           <div class="label"><span>Super Admin</span></div>
         </a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item">
-            <span class="icon"><i class="mdi mdi-logout"></i></span>
-            <span>Log Out</span>
-          </a>
-        </div>
       </div>
       <a title="Log out" class="navbar-item desktop-icon-only">
         <span class="icon"><i class="mdi mdi-logout"></i></span>
@@ -127,7 +121,7 @@
         </a>
       </li>
       <li>
-        <a href="/login">
+        <a href="/login" onclick="noBack()">
           <span class="icon"><i class="mdi mdi-lock"></i></span>
           <span class="menu-item-label">Logout</span>
         </a>
@@ -143,56 +137,31 @@
 </section>
 <form action="/cat" method="POST">
   <section class="section main-section">
-    <button class="button small red --jb-modal moreDel" formaction="/moredelete">Delete All </button>
+    <button class="button small red --jb-modal moreDel" formaction="/moredelete" style="padding: 8px;">All Delete</button>
     <div class="card has-table">
       <div class="card-content">
         <table>
         <tbody>
-          {% for name in all_category %}
+          <!-- {% for name in all_category %} -->
           <tr>
             <td class="checkbox-cell">
                 <label class="checkbox">
-                  <input type="checkbox" name="clinic_info" value="{{ name[0] }}">
-                  <span class="check" name="clinic_info" value="{{ name[0] }}"></span>
+                  <input class="val" type="checkbox" name="clinic_info" value="{{ name[0] }}">
+                  <span class="check" name="clinic_info" value="{{ name[0] }}">
+                  </span>
                 </label>
-            </td>
-            <td data-label="Company">
-              <div id="content1" onclick="checks()">{{ name[1] }}</div>
-              <div id="toggle1" class="is-hidden1"> 
+              </td>
+              <td data-label="Company">
+                <a href="{{ name[0] }}" onclick="changeColor('myid'); return false;" class="linkClass">
+                  <div class="content1">{{ name[1] }}</div>
+                </a>
+              <div > 
                 <div class="card has-table">
-                <div class="card-content">
-                  <table>
-                  <tbody>
-                    <tr>
-                      <td class="checkbox-cell">
-                        <label > 
-                          <input type="checkbox" name="clinic_info1" value="{{ name[0] }}">
-                          <span class="check" name="clinic_info1" value="{{ name[0] }}"></span>
-                        </label>
-                      </td>
-                      <td data-label="Company">
-                        <div>{{ name[3] }}</div>
-                      </td>
-                        <td class="actions-cell">
-                          <div class="buttons right nowrap">
-                            <a href="/category/edit/{{ name[0] }}"> 
-                              <button class="button small green --jb-modal" data-target="sample-modal-2" type="button">
-                              <span class="icon"><i class="mdi mdi-file-edit"></i></span>
-                              </button>
-                            </a>
-                            <a href="/category/delete/{{ name[0] }}"> 
-                              <button class="button small red --jb-modal" data-target="sample-modal" type="button">
-                              <span class="icon"><i class="mdi mdi-trash-can"></i></span>
-                              </button>
-                            </a>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                  </table>
-                </div>
                 </div>
               </div>
+            </td>
+            <td>
+              <div class="let" id="myid"> {{ name[3] }}</div>
             </td>
             <td class="actions-cell">
               <div class="buttons right nowrap">
@@ -209,33 +178,94 @@
               </div>
             </td>
           </tr>
-          {% endfor %}
+          <!-- {% endfor %} -->
         </tbody>
-        </table>
-      </div>
-      <div class="table-pagination">
-        <div class="flex items-center justify-between">
-          <div class="buttons">
-            <button type="button" class="button active">1</button>
-            <button type="button" class="button">2</button>
-            <button type="button" class="button">3</button>
-          </div>
-          <small>Page 1 of 3</small>
+      </table>
+    </div>
+    <div class="table-pagination">
+      <div class="flex items-center justify-between">
+        <div class="buttons">
+          <button type="button" class="button active">1</button>
+          <button type="button" class="button">2</button>
+          <button type="button" class="button">3</button>
         </div>
+        <small>Page 1 of 3</small>
       </div>
     </div>
+  </div>
 </section>
 </form>
+<div class="card-content">
+  <table>
+  <tbody>
+    <!-- {% for name in all_subname %} -->
+    <tr>
+      <td class="checkbox-cell">
+        <label > 
+          <input type="checkbox" name="clinic_info1" value="{{ name[0] }}">
+          <span class="check" name="clinic_info1" value="{{ name[0] }}"></span>
+        </label>
+      </td>
+      <td data-label="Company">
+        <div class="toggle1" >{{name[3] }}</div>
+      </td>
+        <td class="actions-cell">
+          <div class="buttons right nowrap">
+            <a href="/category/edit/{{ name[0] }}"> 
+              <button class="button small green --jb-modal" data-target="sample-modal-2" type="button">
+              <span class="icon"><i class="mdi mdi-file-edit"></i></span>
+              </button>
+            </a>
+            <a href="/category/delete/{{ name[0] }}"> 
+              <button class="button small red --jb-modal" data-target="sample-modal" type="button">
+              <span class="icon"><i class="mdi mdi-trash-can"></i></span>
+              </button>
+            </a>
+        </div>
+      </td>
+    </tr>
+    <!-- {% endfor %} -->
+  </tbody>
+  </table>
+</div>
 </div>
 
 <!-- Scripts below are for demo only -->
 <!-- <script type="text/javascript" src="js/main.min.js?v=1628755089081"></script> -->
 
-
 <script>
+  function changeColor(id)
+{
+  document.getElementById(id).style.display = 'none'
+}
+</script>
 
-  const targetDiv = document.getElementById("toggle1");
-  const btn = document.getElementById("content1");
+<!-- Logout and block previous page  -->
+<script type="text/javascript">
+  function noBack()
+   {
+       window.history.forward()
+   }
+  noBack();
+  window.onload = noBack;
+  window.onpageshow = function(evt) { if (evt.persisted) noBack() }
+  window.onunload = function() { void (0) }
+</script>
+
+<!-- <script>
+
+  const targetDiv = document.getElementsByClassName("toggle1");
+  let btn = document.getElementsByClassName("content1");
+  console.log(btn[1])
+  console.log(targetDiv[0])
+  let val = document.getElementsByClassName("val")
+  let newval = []
+  for (let i = 0; i < val.length; i++) {
+    newval = i
+    console.log(i) +"<br>";
+  }
+  console.log(newval)
+  
   function checks() {
     if (targetDiv.style.display === "none") {
         targetDiv.style.display = "block";
@@ -243,7 +273,7 @@
         targetDiv.style.display = "none";
       }
     };
-</script>
+</script> -->
 
 <script>
   !function(f,b,e,v,n,t,s)
