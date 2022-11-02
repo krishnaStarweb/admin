@@ -65,7 +65,7 @@
           <div class="label"><span>Super Admin</span></div>
         </a>
       </div>
-      <a title="Log out" class="navbar-item desktop-icon-only">
+      <a title="Log out" class="navbar-item desktop-icon-only" href="/login">
         <span class="icon"><i class="mdi mdi-logout"></i></span>
         <span>Log out</span>
       </a>
@@ -151,17 +151,41 @@
                   </span>
                 </label>
               </td>
-              <td data-label="Company">
-                <a href="{{ name[0] }}" onclick="changeColor('myid'); return false;" class="linkClass">
-                  <div class="content1">{{ name[1] }}</div>
-                </a>
-              <div > 
-                <div class="card has-table">
-                </div>
+              <td data-label="Company"  onclick="showsubcategory('{{ name[0] }}')">
+                  <div  class="content1">{{ name[1] }}</div>
+                  <div class="is-hidden1" id="{{ name[0] }}">
+                  <br>
+                  <table>
+                  <tbody>
+                    <tr>
+                      <td class="checkbox-cell">
+                          <label class="checkbox">
+                            <input class="val" type="checkbox" name="clinic_info" value="{{ name[0] }}">
+                            <span class="check" name="clinic_info" value="{{ name[0] }}">
+                            </span>
+                          </label>
+                        </td>
+                        <td>
+                          <div class="let" > {{ name[3] }}</div>
+                        </td>
+                      <td class="actions-cell">
+                        <div class="buttons right nowrap">
+                          <a href="/category/editsubcategory/{{ name[0] }}"> 
+                            <button class="button small green --jb-modal" data-target="sample-modal-2" type="button">
+                              <span class="icon"><i class="mdi mdi-file-edit"></i></span>
+                            </button>
+                          </a>
+                          <a href="/category/deletesubcategory/{{ name[0] }}"> 
+                            <button class="button small red --jb-modal" data-target="sample-modal" type="button">
+                              <span class="icon"><i class="mdi mdi-trash-can"></i></span>
+                            </button>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-            </td>
-            <td>
-              <div class="let" id="myid"> {{ name[3] }}</div>
             </td>
             <td class="actions-cell">
               <div class="buttons right nowrap">
@@ -182,7 +206,7 @@
         </tbody>
       </table>
     </div>
-    <div class="table-pagination">
+    <!-- <div class="table-pagination">
       <div class="flex items-center justify-between">
         <div class="buttons">
           <button type="button" class="button active">1</button>
@@ -191,53 +215,23 @@
         </div>
         <small>Page 1 of 3</small>
       </div>
-    </div>
+    </div> -->
   </div>
 </section>
 </form>
-<div class="card-content">
-  <table>
-  <tbody>
-    <!-- {% for name in all_subname %} -->
-    <tr>
-      <td class="checkbox-cell">
-        <label > 
-          <input type="checkbox" name="clinic_info1" value="{{ name[0] }}">
-          <span class="check" name="clinic_info1" value="{{ name[0] }}"></span>
-        </label>
-      </td>
-      <td data-label="Company">
-        <div class="toggle1" >{{name[3] }}</div>
-      </td>
-        <td class="actions-cell">
-          <div class="buttons right nowrap">
-            <a href="/category/edit/{{ name[0] }}"> 
-              <button class="button small green --jb-modal" data-target="sample-modal-2" type="button">
-              <span class="icon"><i class="mdi mdi-file-edit"></i></span>
-              </button>
-            </a>
-            <a href="/category/delete/{{ name[0] }}"> 
-              <button class="button small red --jb-modal" data-target="sample-modal" type="button">
-              <span class="icon"><i class="mdi mdi-trash-can"></i></span>
-              </button>
-            </a>
-        </div>
-      </td>
-    </tr>
-    <!-- {% endfor %} -->
-  </tbody>
-  </table>
-</div>
 </div>
 
-<!-- Scripts below are for demo only -->
-<!-- <script type="text/javascript" src="js/main.min.js?v=1628755089081"></script> -->
-
+<!-- sub category hide and show -->
 <script>
-  function changeColor(id)
-{
-  document.getElementById(id).style.display = 'none'
-}
+  function showsubcategory(id)
+  {
+  // document.getElementById(id).style.display = 'none'
+  if (document.getElementById(id).style.display === "none") {
+        document.getElementById(id).style.display = "block";
+      } else {
+        document.getElementById(id).style.display = "none";
+      }
+  }
 </script>
 
 <!-- Logout and block previous page  -->
@@ -251,43 +245,6 @@
   window.onpageshow = function(evt) { if (evt.persisted) noBack() }
   window.onunload = function() { void (0) }
 </script>
-
-<!-- <script>
-
-  const targetDiv = document.getElementsByClassName("toggle1");
-  let btn = document.getElementsByClassName("content1");
-  console.log(btn[1])
-  console.log(targetDiv[0])
-  let val = document.getElementsByClassName("val")
-  let newval = []
-  for (let i = 0; i < val.length; i++) {
-    newval = i
-    console.log(i) +"<br>";
-  }
-  console.log(newval)
-  
-  function checks() {
-    if (targetDiv.style.display === "none") {
-        targetDiv.style.display = "block";
-      } else {
-        targetDiv.style.display = "none";
-      }
-    };
-</script> -->
-
-<script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '658339141622648');
-  fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=658339141622648&ev=PageView&noscript=1"/></noscript>
 
 <!-- Icons below are for demo only. Feel free to use any icon pack. Docs: https://bulma.io/documentation/elements/icon/ -->
 <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css">

@@ -82,9 +82,9 @@ input#exampleInputEmail1{
     border-radius: 5px!important;
 }
 
-/* .is-hidden1 {
+.is-hidden1 {
     display: none;
-} */
+}
 
 #content1, #content2, #content3, #content4{
     margin-left: 15px;

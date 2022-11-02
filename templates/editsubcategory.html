@@ -136,31 +136,7 @@
   </div>
 </section>
 <section class="section main-section">
-  <form action="/edit" method="POST">
-    <section class="section main-section category">
-        <div class="form-group">
-            <input type="hidden"  name="id" id="id" value="{{ user[0] }}">
-            <label ><h1 class="label">Category name</h1>
-              <label for="category_name" class="label"></label>
-              <input type="text" class="form-control" id="category_name" name="category_name" value="{{ user[1] }}">
-            </label>
-          </div>
-          <p class="help">Please enter only Alphabets</p>
-          <br>
-          <div class="form-group">
-            <label for="image" class="label"><h1 class="label">Category Image</h1>
-              <input type="file" class="form-control" name="image" id="image" value="{{ user[2] }}" accept="image/png, image/jpeg, image/webp" required>
-            </label>
-          </div>
-          <p class="help">Select only png, jpeg and webp files and size lessthen 5 mb</p>
-        <br>
-        <div class="field grouped">
-          <div class="control">
-            <button type="submit" class="button green" >Submit</button>
-          </div>
-        </div>
-    </section>  
-      
+  <form action="/editsubcategory" method="POST">
     <section class="section main-section category">
         <h1 class="label">All Categorys</h1>
           {% for cat in all_name %}
@@ -172,17 +148,19 @@
           </label>
           <br>
           {% endfor %}
+    </section>
+    <section class="section main-section category">
         <br>
         <div class="form-group">
           <label for="sub_category" class="label"><h2>Add sub category</h2>
-            <input type="text" class="form-control " name="sub_category" id="sub_category" placeholder="Enter sub category"  value="{{ user[3] }}" required>
+            <input type="text" class="form-control " name="sub_category" id="sub_category" placeholder="Enter sub category"  value="{{ subcate[0] }}" required>
           </label>
         </div>
         <p class="help">Please enter only Alphabets</p>
         <br>
         <div class="form-group">
           <label for="sub_category_image" class="label"><h2>sub category image</h2>
-            <input type="file" class="form-control" name="sub_category_image" id="sub_category_image"  value="{{ user[4] }}" accept="image/png, image/jpeg, image/webp">
+            <input type="file" class="form-control" name="sub_category_image" id="sub_category_image"  value="{{ subcate [1] }}" accept="image/png, image/jpeg, image/webp">
           </label>
         </div>
         <p class="help">Select only png, jpeg and webp files and size lessthen 5 mb</p>

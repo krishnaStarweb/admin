@@ -56,15 +56,8 @@
           <div class="label"><span>Super Admin</span></div>
           <span class="icon"><i class="mdi mdi-chevron-down"></i></span>
         </a>
-        <div class="navbar-dropdown">
-          <hr class="navbar-divider">
-          <a class="navbar-item">
-            <span class="icon"><i class="mdi mdi-logout"></i></span>
-            <span>Log Out</span>
-          </a>
-        </div>
       </div>
-      <a title="Log out" class="navbar-item desktop-icon-only">
+      <a title="Log out" class="navbar-item desktop-icon-only" href="/login">
         <span class="icon"><i class="mdi mdi-logout"></i></span>
         <span>Log out</span>
       </a>
@@ -137,20 +130,16 @@
   <form action="/editPost" method="POST">
     <section class="section main-section category">
       <div class="card mb-6">
-        <!-- <h1 class="label" >Post Title</h1> -->
           <label for="post_name" class="label"><h1>Post Title</h1>
-            <input type="text" class="form-control" name="post_name" id="post_name" placeholder="Enter Post title" value="{{ edit_post[1] }}">
+            <input type="text" class="form-control" name="post_name" id="post_name" placeholder="Enter Post title" value="{{ edit_post[1] }}" required>
         </label>
         <p class="help">Please enter only Alphabets</p>
-          <!-- </form><br> -->
-          <!-- <form> -->
             <br>
             <div class="form-group">
               <label for="post_image" class="label"><h1>Post Image</h1></label>
               <input type="file" class="form-control" name="post_image" id="post_image"  value="{{ edit_post[2] }}" accept="image/png, image/jpeg, image/webp">
             </div>
             <p class="help">Select only png, jpeg and webp files and size lessthen 5 mb</p>
-            <!-- </form><br> -->
             <br>
             <div class="container mt-4 mb-4 keditor">
               <h1 class="label">Description</h1>
@@ -172,10 +161,8 @@
     <h1 class="label">All Categorys</h1>
     {% for cat in all_name %}
     <label data-label="Company">
-        <!-- <a href="/category/{{ cat[1] }}"> -->
-            <input type="checkbox" name="get_value" id="get_value" value="{{ cat[1] }}" > 
+            <input type="checkbox" name="get_value" id="get_value" value="{{ cat[1] }}" required> 
             <label aria-required="true">{{ cat[0] }}</label>
-            <!-- </a> -->
         </label>
         <br>
         {% endfor %}
@@ -202,56 +189,9 @@
     }
   }
 
-  function insidesubcat2() {
-    var cli2 = document.getElementById("insidesubcat2");
-    var text2 = document.getElementById("text2");
-    if (cli2.checked == true){
-      text2.style.display = "block";
-      text2.style.marginLeft = "20px";
-    } else {
-       text2.style.display = "none";
-    }
-  }
-
-  function myFunction() {
-    var checkBox = document.getElementById("myCheck");
-    var text = document.getElementById("text2");
-    if (checkBox.checked == true){
-      text.style.display = "block";
-      text.style.marginLeft = "20px";
-    } else {
-       text.style.display = "none";
-    }
-
-    var checkBox2 = document.getElementById("insidesubcat");
-    var text2 = document.getElementById("text");
-    if (checkBox2.checked == true){
-      text2.style.display = "block";
-      text.style.marginLeft = "20px";
-    } else {
-      text2.style.display = "none";
-    }
-
-    var checkBox3 = document.getElementById("myCheck3");
-    var text3 = document.getElementById("text3");
-    if (checkBox3.checked == true){
-      text3.style.display = "block";
-      text3.style.marginLeft = "20px";
-    } else {
-      text3.style.display = "none";
-    }
-
-    var checkBox4 = document.getElementById("myCheck4");
-    var text4 = document.getElementById("text4");
-    if (checkBox4.checked == true){
-      text4.style.display = "block";
-      text4.style.marginLeft = "20px";
-    } else {
-      text4.style.display = "none";
-    }
-  }
   </script>
   <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
 <!-- Image validation function -->
 <script>
   Filevalidation = () => {
@@ -266,9 +206,6 @@
               if (file >= 4096) {
                   alert(
                     "File too Big, please select a file less than 5 mb");
-              } else if (file < 2048) {
-                  alert(
-                    "File too small, please select a file greater than 1 mb");
               } else {
                   document.getElementById('size').innerHTML = '<b>'
                   + file + '</b> KB';
@@ -312,8 +249,6 @@
         },
       });
   </script>
-
-<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=658339141622648&ev=PageView&noscript=1"/></noscript>
 
 <!-- Icons below are for demo only. Feel free to use any icon pack. Docs: https://bulma.io/documentation/elements/icon/ -->
 <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css">

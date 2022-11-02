@@ -1,6 +1,4 @@
 from crypt import methods
-from operator import ne
-from turtle import pos
 from flask import Flask, render_template, request,  redirect, session, jsonify
 import mysql.connector
 import json
@@ -52,7 +50,6 @@ def logout():
         session.pop('username', None)
         session.pop('password', None)
         return redirect('/')
-    
     return redirect('/')
 
 #Deshbord
@@ -68,14 +65,15 @@ def index():
     postCount = mycursor.fetchall()
     return render_template('index.html', output_data = data, post_count = postCount)
 
-
+ROWS_PER_PAGE = 5
 #For getting all categorys
 @app.route('/allCategory', methods=['GET','POST'])
 def tables():
     mycursor.execute('SELECT * FROM category')
     name = mycursor.fetchall()
+    page = request.args.get('page', 1, type=int)
     
-    return render_template('allCategory.html', all_category = name , all_subname=all_subname)
+    return render_template('allCategory.html', all_category = name , all_subname=all_subname, page=page)
 
 # For edit category
 @app.route('/category/edit/<name>', methods=['GET','POST', 'PATCH'])
@@ -100,6 +98,29 @@ def edit(name):
     
         return redirect('/allCategory')
     return render_template('edit.html' , user = user, all_name = all_name, name = name)
+
+#For edit sub category
+@app.route('/category/editsubcategory/<id>', methods= ['GET', 'POST'])
+def editsubcategory(id):
+    #Select sub category name, image and parent it form category
+    mycursor.execute("SELECT sub_category_name, sub_category_image, parent FROM category WHERE id = '"+ id + "'")
+    subcate = mycursor.fetchone()
+
+    #update data into table
+    if request.method == 'POST':
+        sub_category_name = request.form.get('sub_category')
+        sub_category_image = request.form.get('sub_category_image')
+        parent = request.form.get('get_value')
+
+        query = '''UPDATE category
+                SET sub_category_name = %s, sub_category_image = %s, parent = %s
+                WHERE id = %s'''
+        values = (sub_category_name, sub_category_image ,parent, id)
+        mycursor.execute(query, values)
+        mydb.commit()
+
+        return redirect('/allCategory')
+    return render_template('editsubcategory.html', subcate = subcate, all_name=all_name, id = id)
 
 #Delete one or more category
 @app.route('/moredelete', methods= ['POST', 'GET'])
@@ -127,9 +148,23 @@ def delete(name):
     mycursor.execute('DELETE FROM category WHERE id = %s',[name])
     delete =  mycursor.fetchall()
     mydb.commit()
-
     return redirect('/allCategory')
 
+#For delete sub category
+@app.route('/category/deletesubcategory/<id>')
+def deletesubcategory(id):
+    #Delete sub category data from category using id
+    sub_category_name = 'NULL'
+    sub_category_image = 'NULL'
+    parent = 0
+
+    query = '''UPDATE category
+            SET sub_category_name = %s, sub_category_image = %s, parent = %s
+            WHERE id = %s'''
+    values = (sub_category_name, sub_category_image, parent,id)
+    mycursor.execute(query, values)
+    mydb.commit()
+    return redirect('/allCategory')
 
 #All post template
 @app.route('/allPost')
@@ -193,10 +228,9 @@ def category():
 
         mycursor.execute('insert into category (category_name, category_image, sub_category_name,  sub_category_image, parent) values(%s, %s, %s, %s, %s)', (category_name, category_image, sub_category_name, sub_category_image, parent))
         mydb.commit()
-        # mycursor.close()
         
-        return render_template('category.html', all_name = all_name)
-    return render_template('category.html', all_name = all_name)
+        return redirect('/category')
+    return render_template('category.html', all_name = all_name, all_subname=all_subname)
 
 
 #Insert sub categorys using parent category id
@@ -210,11 +244,11 @@ def insert():
         id  = request.form.get('get_Value')
         mycursor.execute('INSERT INTO category (sub_category_name, sub_category_image, parent) values(%s, %s, %s) WHERE id = %s' ,(sub_category_name, sub_category_image, parent, parent))
         mydb.commit()
-        return render_template('category.html', all_name = all_name, id=id)
-    return render_template('category.html', all_name = all_name , id=id)
+        return render_template('category.html', all_name = all_name)
+    return render_template('category.html', all_name = all_name)
 
 
-#For getting all sub category names
+#For getting all values of category table
 all_subname = mycursor.execute('SELECT * FROM category')
 mycursor.execute(all_subname)
 all_subname = mycursor.fetchall()

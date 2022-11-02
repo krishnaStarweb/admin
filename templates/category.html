@@ -66,14 +66,8 @@
         <a class="navbar-link">
           <div class="label"><span>Super Admin</span></div>
         </a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item">
-            <span class="icon"><i class="mdi mdi-logout"></i></span>
-            <span>Log Out</span>
-          </a>
-        </div>
       </div>
-      <a title="Log out" class="navbar-item desktop-icon-only">
+      <a title="Log out" class="navbar-item desktop-icon-only" href="/login">
         <span class="icon"><i class="mdi mdi-logout"></i></span>
         <span>Log out</span>
       </a>
@@ -148,7 +142,7 @@
     <section class="section main-section category">
       <h1 class="label">Category name</h1>
         <div class="form-group">
-          <input type="text" class="form-control" name="category_name" id="category_name" placeholder="Enter category name" pattern="[A-Za-z]{1,15}" maxlength="15">
+          <input type="text" class="form-control" name="category_name" id="category_name" placeholder="Enter category name" pattern="[A-Za-z]{1,15}" maxlength="15" required>
         </div>
         <p class="help">Please enter only Alphabets</p>
         <br>
@@ -210,9 +204,6 @@
               if (file >= 4096) {
                   alert(
                     "File too Big, please select a file less than 5 mb");
-              } else if (file < 2048) {
-                  alert(
-                    "File too small, please select a file greater than 1 mb");
               } else {
                   document.getElementById('size').innerHTML = '<b>'
                   + file + '</b> KB';
@@ -247,23 +238,6 @@
   });
 </script>
 
-<!-- Scripts below are for demo only -->
-<!-- <script type="text/javascript" src="js/main.min.js?v=1628755089081"></script> -->
-
-
-<!-- <script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '658339141622648');
-  fbq('track', 'PageView');
-</script> -->
-
 <!-- Logout and block previous page  -->
 <script type="text/javascript">
   function noBack()
@@ -274,24 +248,6 @@
   window.onload = noBack;
   window.onpageshow = function(evt) { if (evt.persisted) noBack() }
   window.onunload = function() { void (0) }
-</script>
-
-<!-- image validation -->
-<script>
-  let input = document.getElementById('image')
-  let lable = document.getElementsByClassName('label')
-  input .addEventListener('change', () => {
-    let files = input.files;
-
-    if(files.length > 0){
-      if(file[0],size> 10 *1024 ){
-        lable.innerText = 'file size Exceeds';
-        return;
-      }
-    }
-    lable.innerText = " ";
-  })
-
 </script>
 
 <script>
@@ -310,8 +266,6 @@
     }
   }
 </script>
-
-<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=658339141622648&ev=PageView&noscript=1"/></noscript>
 
 <!-- Icons below are for demo only. Feel free to use any icon pack. Docs: https://bulma.io/documentation/elements/icon/ -->
 <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css">
